@@ -200,6 +200,42 @@ BiTree *DeleteValue(BiTree *T,int x){
         return T;
     }
 
+    if (searchNode->lChild != NULL && searchNode->rChild != NULL) {
+        //要删除的节点既有左孩子，又有右孩子
+        /**
+         *  算法：删除节点p的左子树和右子树均不为空。找到p的后继y，因为y一定没有左子树，所以可以删除y，并让y的父节点成为y的右子树的父节点，并用y的值代替p的值；
+         
+         如何找到要删除节点的后继节点,包括该后继节点的父节点！！
+         */
+
+        BiTNode *nextNode;//寻找要删除节点的后继节点
+        BiTNode *nextParentNode;//寻找要删除节点的后继节点的父节点
+        nextParentNode = searchNode;
+        nextNode = searchNode->rChild;
+        while (nextNode->lChild != NULL) {
+            nextParentNode = nextNode;
+            nextNode = nextNode->lChild;
+        }
+
+        //这里要判断nextNode节点和nextParentNode节点的值大小，因为需要判断要删除节点是父亲的左孩子还是右孩子
+        if (nextNode->data < nextParentNode->data) {
+            //是左孩子
+            nextParentNode->lChild = nextNode->rChild;
+        }else{
+            //是右孩子
+            nextParentNode->rChild = nextNode->rChild;
+        }
+
+        //代替值
+        searchNode->data = nextNode->data;
+
+        //删除后继节点
+        free(nextNode);
+        nextNode = NULL;
+
+        return T;
+    }
+
     return T;
 }
 
