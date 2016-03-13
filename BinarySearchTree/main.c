@@ -145,6 +145,12 @@ BiTree *DeleteValue(BiTree *T,int x){
 
     while (searchNode->data != x) {
 
+        if (searchNode->lChild == NULL && searchNode->rChild == NULL) {
+            //已经是叶子节点了，但是还没有找到该值，表示树种根本就没有要删除的节点
+            printf("%s函数执行，不存在该值，删除失败\n",__FUNCTION__);
+            return T;
+        }
+
         if (x < searchNode->data) {
 
             parentNode = searchNode;
