@@ -112,7 +112,7 @@ int SearchValue(BiTree T,int x){
             return 1;
         }
     }
-    
+
     return 0;
 }
 
