@@ -124,6 +124,7 @@ BiTree *DeleteValue(BiTree *T,int x){
     BiTNode *searchNode;
     BiTNode *parentNode;
 
+    //初始都指向根节点
     searchNode = *T;
     parentNode = *T;
 
@@ -144,7 +145,6 @@ BiTree *DeleteValue(BiTree *T,int x){
 
     if (searchNode->lChild == NULL && searchNode->rChild == NULL) {
         //是叶子节点
-
         if ((*T)->lChild == NULL && (*T)->rChild == NULL) {
             //是根节点
             free(*T);
@@ -162,6 +162,42 @@ BiTree *DeleteValue(BiTree *T,int x){
             free(searchNode);
             searchNode = NULL;
         }
+
+        return T;
+    }
+
+    if (searchNode->lChild != NULL && searchNode->rChild == NULL) {
+        //有左子树，没有右子树
+        //直接把父节点的指针指向右子树即可，然后释放自己;
+        //首先需要判断当前节点是父节点的左孩子还是右孩子
+        if (searchNode->data < parentNode->data) {
+            //是左孩子
+            parentNode->lChild = searchNode->lChild;
+        }else{
+            //是右孩子
+            parentNode->rChild = searchNode->lChild;
+        }
+
+        free(searchNode);
+        searchNode = NULL;
+
+        return T;
+    }
+
+    if (searchNode->lChild == NULL && searchNode->rChild != NULL) {
+        //没有左子树，有右子树
+        if (searchNode->data < parentNode->data) {
+            //是左孩子
+            parentNode->lChild = searchNode->rChild;
+        }else{
+            //是右孩子
+            parentNode->rChild = searchNode->rChild;
+        }
+
+        free(searchNode);
+        searchNode = NULL;
+
+        return T;
     }
 
     return T;
