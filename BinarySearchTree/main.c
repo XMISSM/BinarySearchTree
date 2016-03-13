@@ -27,6 +27,7 @@ typedef struct BTNode{
 int CreateBinarySearchTree(BiTree *T);
 void Insert(BiTree *T,int x);
 void MiddleOrder(BiTree T);
+void PreOrder(BiTree T);
 
 //创建二叉查找树
 /**
@@ -81,7 +82,7 @@ void Insert(BiTree *T,int x){
     return;
 }
 
-//中遍历二叉查找树
+//中序遍历二叉查找树
 //打印的应该是一个递增的序列
 void MiddleOrder(BiTree T){
     if (T == NULL) {
@@ -91,6 +92,20 @@ void MiddleOrder(BiTree T){
         MiddleOrder(T->lChild);
         printf("%d ",T->data);
         MiddleOrder(T->rChild);
+    }
+}
+
+//先序遍历二叉查找树
+//因为先序遍历+中序遍历 可以唯一确定一棵树，等下可以验证树是否正确
+void PreOrder(BiTree T){
+
+    if (T == NULL) {
+        return;
+    }else{
+
+        printf("%d ",T->data);
+        PreOrder(T->lChild);
+        PreOrder(T->rChild);
     }
 }
 
@@ -259,6 +274,9 @@ int main(int argc, const char * argv[]) {
     int deleteValue;
     scanf("%d",&deleteValue);
     DeleteValue(&tree, deleteValue);
+    printf("先序遍历：");
+    PreOrder(tree);
+    printf("\n中序遍历：");
     MiddleOrder(tree);//遍历检查
     printf("\n");
     
