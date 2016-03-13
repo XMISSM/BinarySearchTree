@@ -94,6 +94,28 @@ void MiddleOrder(BiTree T){
     }
 }
 
+//查找某一个值
+//返回1表示找到该值，返回0表示没有找到
+int SearchValue(BiTree T,int x){
+    if (T == NULL) {
+        return 0;
+    }else{
+        if (x < T->data) {
+            //查左子树
+            SearchValue(T->lChild, x);
+        }else if (x > T->data){
+            //查右子树
+            SearchValue(T->rChild, x);
+        }else{
+            //找到该值
+            printf("该值的内存地址为：%p\n",T);
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
 int main(int argc, const char * argv[]) {
 
     BiTree tree;
@@ -103,6 +125,11 @@ int main(int argc, const char * argv[]) {
     
     MiddleOrder(tree);
     printf("\n");
+
+    printf("请输入要查找的元素：");
+    int searchValue;
+    scanf("%d",&searchValue);
+    SearchValue(tree,searchValue);
     
     return 0;
 }
