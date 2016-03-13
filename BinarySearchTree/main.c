@@ -98,6 +98,7 @@ int main(int argc, const char * argv[]) {
 
     BiTree tree;
 
+    //这个是引用传递
     CreateBinarySearchTree(&tree);
     
     MiddleOrder(tree);
