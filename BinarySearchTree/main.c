@@ -96,7 +96,7 @@ void MiddleOrder(BiTree T){
 
 //查找某一个值
 //返回1表示找到该值，返回0表示没有找到
-int SearchValue(BiTree T,int x){
+BiTNode *SearchValue(BiTree T,int x){
     if (T == NULL) {
         return 0;
     }else{
@@ -109,11 +109,62 @@ int SearchValue(BiTree T,int x){
         }else{
             //找到该值
             printf("该值的内存地址为：%p\n",T);
-            return 1;
+            return T;
         }
     }
 
-    return 0;
+    return NULL;
+}
+
+//删除某一个元素
+BiTree *DeleteValue(BiTree *T,int x){
+
+
+    //先要查找该节点，同时也要保存该节点的父节点
+    BiTNode *searchNode;
+    BiTNode *parentNode;
+
+    searchNode = *T;
+    parentNode = *T;
+
+    while (searchNode->data != x) {
+
+        if (x < searchNode->data) {
+
+            parentNode = searchNode;
+            searchNode = searchNode->lChild;
+        }else if (x > searchNode->data){
+
+            parentNode = searchNode;
+            searchNode = searchNode->rChild;
+        }else{
+            break;
+        }
+    }
+
+    if (searchNode->lChild == NULL && searchNode->rChild == NULL) {
+        //是叶子节点
+
+        if ((*T)->lChild == NULL && (*T)->rChild == NULL) {
+            //是根节点
+            free(*T);
+            *T = NULL;
+        }else{
+            //不是根节点,是普通的叶子节点
+            //需要判断要删除的节点是父节点的左孩子还是右孩子
+            if (searchNode->data < parentNode->data) {
+                //是左孩子
+                parentNode->lChild = NULL;
+            }else{
+                //是右孩子
+                parentNode->rChild = NULL;
+            }
+            free(searchNode);
+            searchNode = NULL;
+        }
+    }
+
+    return T;
 }
 
 int main(int argc, const char * argv[]) {
@@ -130,6 +181,14 @@ int main(int argc, const char * argv[]) {
     int searchValue;
     scanf("%d",&searchValue);
     SearchValue(tree,searchValue);
+
+
+    printf("请输入要删除的元素：");
+    int deleteValue;
+    scanf("%d",&deleteValue);
+    DeleteValue(&tree, deleteValue);
+    MiddleOrder(tree);//遍历检查
+    printf("\n");
     
     return 0;
 }
