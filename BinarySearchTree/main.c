@@ -51,18 +51,17 @@ int CreateBinarySearchTree(BiTree *T){
 //插入节点
 void Insert(BiTree *T,int x){
 
-    BiTree pInsert = (BiTree )malloc(sizeof(BiTNode));
+    //这里创建一个要插入的节点
+    BiTNode *pInsert = (BiTNode *)malloc(sizeof(BiTNode));
     pInsert->data = x;
     pInsert->lChild = NULL;
     pInsert->rChild = NULL;
 
     if ((*T) == NULL) {
-
         *T = pInsert;
     }
 
     if ((*T)->lChild == NULL && x < (*T)->data) {
-
         (*T)->lChild = pInsert;
     }
 
@@ -70,6 +69,7 @@ void Insert(BiTree *T,int x){
         (*T)->rChild = pInsert;
     }
 
+    //递归实现
     if (x < (*T)->data) {
         Insert(&(*T)->lChild, x);
     }
@@ -84,7 +84,6 @@ void Insert(BiTree *T,int x){
 //中遍历二叉查找树
 //打印的应该是一个递增的序列
 void MiddleOrder(BiTree T){
-
     if (T == NULL) {
         return;
     }else{
@@ -95,16 +94,14 @@ void MiddleOrder(BiTree T){
     }
 }
 
-
-
 int main(int argc, const char * argv[]) {
-
 
     BiTree tree;
 
     CreateBinarySearchTree(&tree);
     
     MiddleOrder(tree);
+    printf("\n");
     
     return 0;
 }
