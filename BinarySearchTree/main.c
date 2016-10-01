@@ -58,16 +58,19 @@ void Insert(BiTNode **T,int x)
     if ((*T) == NULL)
     {
         *T = pInsert;
+        return;
     }
 
     if ((*T)->lChild == NULL && x < (*T)->data)
     {
         (*T)->lChild = pInsert;
+        return;
     }
 
     if ((*T)->rChild == NULL && x > (*T)->data)
     {
         (*T)->rChild = pInsert;
+        return;
     }
 
     //递归实现
